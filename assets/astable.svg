@@ -276,6 +276,19 @@
             id="MJX-209-TEX-I-1D449"
             d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"
         />
+        <symbol id="node_jump-crossing">
+            <g
+                fill="none"
+                stroke="currentStroke"
+                stroke-miterlimit="10"
+                stroke-width=".53134"
+            >
+                <path
+                    stroke-linejoin="bevel"
+                    d="M.2657 5.55693h3.17477c0-1.1689.94756-2.11645 2.11645-2.11645s2.11645.94755 2.11645 2.11645h3.17478m-5.29123-5.29123v2.64561m0 1.05825v6.87859"
+                />
+            </g>
+        </symbol>
     </defs>
     <g style="" class="">
         <use
@@ -713,26 +726,6 @@
     </g>
     <g class="">
         <polyline
-            points="-188.976,-113.386 -132.283,-56.693"
-            fill="none"
-            stroke-dasharray="0.4pt 0pt"
-            stroke-opacity="1"
-            stroke-width="0.5333333333333333"
-            stroke="#000"
-        />
-    </g>
-    <g class="">
-        <polyline
-            points="-132.283,-113.386 -188.976,-56.693"
-            fill="none"
-            stroke-dasharray="0.4pt 0pt"
-            stroke-opacity="1"
-            stroke-width="0.5333333333333333"
-            stroke="#000"
-        />
-    </g>
-    <g class="">
-        <polyline
             points="-75.591,-104.693 -75.591,-85.039 -75.591,-85.795"
             fill="none"
             stroke-dasharray="0.4pt 0pt"
@@ -1013,6 +1006,56 @@
     <g class="">
         <polyline
             points="-75.591,-27.591 -75.591,-18.898"
+            fill="none"
+            stroke-dasharray="0.4pt 0pt"
+            stroke-opacity="1"
+            stroke-width="0.5333333333333333"
+            stroke="#000"
+        />
+    </g>
+    <g class="">
+        <use
+            xlink:href="#node_jump-crossing"
+            fill="#fff"
+            stroke="#000"
+            style="color: #000;"
+            transform="matrix(0.7071067811865476,-0.7071067811865475,0.7071067811865475,0.7071067811865476,-168.48859995993263,-85.03937714980796)"
+            class=""
+        />
+    </g>
+    <g class="">
+        <polyline
+            points="-132.28346456692913,-113.38582677165354 -156.88845664602482,-88.78083469255785"
+            fill="none"
+            stroke-dasharray="0.4pt 0pt"
+            stroke-opacity="1"
+            stroke-width="0.5333333333333333"
+            stroke="#000"
+        />
+    </g>
+    <g class="">
+        <polyline
+            points="-164.3713788025924,-81.29791253599026 -188.97637795275588,-56.69291338582677"
+            fill="none"
+            stroke-dasharray="0.4pt 0pt"
+            stroke-opacity="1"
+            stroke-width="0.5333333333333333"
+            stroke="#000"
+        />
+    </g>
+    <g class="">
+        <polyline
+            points="-188.97637795275588,-113.38582677165354 -164.37138587366022,-88.78083469255785"
+            fill="none"
+            stroke-dasharray="0.4pt 0pt"
+            stroke-opacity="1"
+            stroke-width="0.5333333333333333"
+            stroke="#000"
+        />
+    </g>
+    <g class="">
+        <polyline
+            points="-156.88846371709263,-81.29791253599026 -132.28346456692913,-56.69291338582677"
             fill="none"
             stroke-dasharray="0.4pt 0pt"
             stroke-opacity="1"
