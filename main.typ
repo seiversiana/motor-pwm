@@ -54,3 +54,11 @@ The block diagram of the system is shown in @d:block.
 	),
 	caption: [Block diagram of the PWM motor controller system.]
 ) <d:block>
+
+== Astable Multivibrator
+The circuit diagram of the astable multivibrator is shown in @i:astable.
+
+#figure(
+	image("assets/astable.svg"),
+	caption: [Circuit diagram of the astable multivibrator.]
+) <i:astable>
