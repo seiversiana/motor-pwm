@@ -23,7 +23,7 @@
 
 
 
-= Theoretics
+= Theory
 == Specifications
 We are tasked to create a PWM motor controller by cascading an astable
 multivibrator, a monostable multivibrator, an emitter follower, and finally a
