@@ -3,3 +3,6 @@
 !/.gitignore
 !/LICENSE
 !/README.md
+
+!/main.typ
+!/refs.yaml
