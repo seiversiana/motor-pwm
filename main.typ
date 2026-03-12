@@ -386,7 +386,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$Delta R_"MB1"$, qty(1.97, "kO"),
 		$R_"P"$        , qtyrange(0, 1, "MO"),
 		$R_"MB2"$      , qty(4.67, "kO"),
-		$C_"M1"$       , qty(39.97, "nF")
+		$C_"M"$       , qty(39.97, "nF")
 	),
 	caption: [
 		Component Values/Models for the Monostable Multivbrator
