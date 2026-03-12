@@ -205,7 +205,7 @@ $
 	R_"T" = V_"T"/I_"T" = #qty(618.67, "O")
 $ <f:tresistance>
 
-Finally, in order to solve for $C_"T"$, we want a pulse width that is enough
+Finally, in order to solve for $C_"T"$, we want a pulse width that is long enough
 to start regeneration and short enough that the capacitor fully resets before
 the next cycle. A common value for this pulse width is
 $#qty(10, "%") dot T_"on, min"$. We can use $T_"pulse" = R_"T" C_"T"$ for this
@@ -225,3 +225,13 @@ $
 $ <f:tcapv>
 
 == Buffer and DC Chopper
+The circuit diagram of the DC chopper coupled to the emitter follower and
+the monostable multivibrator is shown in @i:chopper.
+
+#figure(
+	image("assets/chopper.png"),
+	caption: [
+		Circuit diagram of the DC chopper coupled to the emitter follower and
+		the monostable multivibrator.
+	]
+) <i:chopper>
