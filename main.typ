@@ -358,7 +358,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$R_"AB1"$, qty(5.25, "kO"),
 		$R_"AB2"$, qty(5.25, "kO"),
 		$C_"A1"$ , qty(24.98, "nF"),
-		$C_"A2"$ , qty(24.98, "nF"),
+		$C_"A2"$ , qty(24.98, "nF")
 	),
 	caption: [Component Values/Models for the Astable Multivbrator]
 ) <t:astable>
@@ -369,7 +369,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$D_"T"$, [1N4148],
 		$R_"T"$, qty(618.67, "O"),
-		$C_"T"$, qty(14.69, "nF"),
+		$C_"T"$, qty(14.69, "nF")
 	),
 	caption: [Component Values/Models for the Monostable Multivibrator Trigger]
 ) <t:trigger>
@@ -386,7 +386,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$Delta R_"MB1"$, qty(1.97, "kO"),
 		$R_"P"$        , qtyrange(0, 1, "MO"),
 		$R_"MB2"$      , qty(4.67, "kO"),
-		$C_"M1"$       , qty(24.98, "nF"),
+		$C_"M1"$       , qty(39.97, "nF")
 	),
 	caption: [
 		Component Values/Models for the Monostable Multivbrator
@@ -399,7 +399,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$Q_"E"$ , [2N4401],
 		$R_"EB"$, qty(3.75, "kO"),
-		$R_"EE"$, qty(235.29, "O"),
+		$R_"EE"$, qty(235.29, "O")
 	),
 	caption: [Component Values/Models for the Emitter Follower]
 ) <t:emitterfollower>
@@ -411,7 +411,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$M$     , [#qty(6, "V") size 130 \ brushed DC motor],
 		$Q_"D"$ , [TIP31C],
 		$D_"D"$ , [1N4007],
-		$R_"DB"$, qty(53.75, "O"),
+		$R_"DB"$, qty(53.75, "O")
 	),
 	caption: [Component Values/Models for the DC Chopper]
 )  <t:chopper>
