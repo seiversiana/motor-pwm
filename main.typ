@@ -482,7 +482,105 @@ saturation voltage $V_"CE, sat" = #qty(0.2, "V")$. $V_"BE, sat"$ is also not
 entirely accurate; the 2N3904 datasheet @2n3904 specifies a range and not a
 constant value.
 
-== Modified, Partially Standard Values
+== Modified, Partially Standardized Components
 In order to fix the discrepancies in the frequency and duty cycle of the system,
 we will simply just try nearby standard values and find the values which
-correspond to the least error in the measurements.
+correspond to the least error in the measurements. As much as possible, we want
+to avoid modifying the resistor values too much, as this may cause the
+transistors to fall out of saturation. Instead, we'll vary the capacitors first,
+and then vary the resistors.
+
+The new values of various components are shown in @t:partialcomponents. Note that
+these values may be combinations of two standard-valued components.
+
+#figure(
+	table(
+		columns: 2,
+		table.header[Component][New Value],
+		$R_"AB1"$      , qty(5.4, "kO"),
+		$R_"AB2"$      , qty(5.4, "kO"),
+		$R_"MB1"$      , qty(4.1, "kO"),
+		$Delta R_"MB1"$, qty(2.5, "kO"),
+		$C_"A1"$       , qty(27, "nF"),
+		$C_"A2"$       , qty(27, "nF"),
+		$C_"M"$        , qty(39, "nF"),
+	),
+	caption: [New Component Values of the Partially Standardized Circuit]
+) <t:partialcomponents>
+
+With the new values, the new measurements are shown in @t:partial.
+
+#figure(
+	vstable(
+		columns: 3,
+		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
+		[Frequency] , qty(5.50, "kHz"), qty(5.48, "kHz"),
+		[Duty Cycle], qty(50.31, "%") , qty(79.93, "%")
+	),
+	caption: [Simulation Measurements of the Partially Standardized Circuit]
+) <t:partial>
+
+These values are now well within the specifications for frequency and duty cycle.
+
+== Modified, Fully Standardized Components
+The last step is to replace all other components with standard-valued near
+equivalents. Standardizing all of the values reduced the frequency a bit, so
+new values had to be picked for $R_"AB1"$ and $R_"AB2"$. The duty cycle
+components were left unchanged. The new fully standardized values are shown
+in @t:fullcomponents
+
+#figure(
+	dtable(
+		columns: 4,
+		table.header[Component][Value][Component][Value],
+		$R_"AC1"$, qty(560, "O"),
+		$R_"AC2"$, qty(560, "O"),
+		$R_"AB1"$, qty(5.37, "kO"),
+		$R_"AB2"$, qty(5.37, "kO"),
+		$R_"T"$  , qty(620, "O"),
+		$R_"MC1"$, qty(560, "O"),
+		$R_"MC2"$, qty(560, "O"),
+		$R_"MB2"$, qty(4.7, "kO"),
+		$R_"EB"$ , qty(3.6, "kO"),
+		$R_"EE"$ , qty(240, "O"),
+		$R_"DB"$ , qty(51, "O"),
+		$C_"T"$  , qty(15, "nF"),
+	),
+	caption: [New Component Values of the Fully Standardized Circuit],
+	placement: top
+) <t:fullcomponents>
+
+With the fully standardized values, the new measurements are shown in @t:full.
+
+#figure(
+	vstable(
+		columns: 3,
+		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
+		[Frequency] , qty(5.49, "kHz"), qty(5.48, "kHz"),
+		[Duty Cycle], qty(50.23, "%") , qty(79.82, "%")
+	),
+	caption: [Simulation Measurements of the Fully Standardized Circuit]
+) <t:full>
+
+These values are still well within the specifications. Before we continue to
+the physical implementation of the circuit, let's first check the wattages of
+the relatively-high current resistors. In particular, we want to check $R_"DB"$
+and $R_"EE"$. According to LTSpice, $I_"DB" approx #qty(45.9, "mA")$ and
+$I_"EE" approx #qty(14.6, "mA")$. We can solve for the power dissipation of
+the resistors as shown in @f:pdb and @f:pee.
+
+$
+	P_"DB" = I_"DB"^2 R_"DB" = #qty(107.45, "mW")
+$ <f:pdb>
+
+$
+	P_"EE" = I_"EE"^2 R_"EE" = #qty(51.16, "mW")
+$ <f:pee>
+
+While both of these are well within the rating of a #qty(0.25, "W") resistor,
+just to be safe, let's specify $P_"DB"$ to be a #qty(0.5, "W") resistor instead.
+
+
+
+= Implementation
+== Bill of Materials
