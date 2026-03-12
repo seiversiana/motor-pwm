@@ -19,3 +19,24 @@ astable:
   author: Onsemi
   date: 2024-09
   url: https://www.onsemi.com/download/data-sheet/pdf/1n914-d.pdf
+
+tip31c:
+  type: Reference
+  title: TIP31C-D
+  author: Onsemi
+  date: 2017-11
+  url: https://www.onsemi.com/pdf/datasheet/tip31c-d.pdf
+
+2n4401:
+  type: Reference
+  title: 2N4401 - General Purpose Transistors NPN Silicon - 2N4401-D
+  author: Onsemi
+  date: 2010-02
+  url: https://www.onsemi.com/download/data-sheet/pdf/2n4401-d.pdf
+
+1n4007:
+  type: Reference
+  title: 1N4001 - Axial-Lead Glass Passivated Standard Recovery Rectifiers - 1N4001-D
+  author: Onsemi
+  date: 2024-06
+  url: https://www.onsemi.com/download/data-sheet/pdf/1n4001-d.pdf
