@@ -77,7 +77,7 @@
         {
             "type": "node",
             "label": {
-                "value": "U_\\text{A2}",
+                "value": "Q_\\text{A2}",
                 "anchor": "default",
                 "position": "default",
                 "distance": "0.12cm"
@@ -91,7 +91,7 @@
         {
             "type": "node",
             "label": {
-                "value": "U_\\text{A1}",
+                "value": "Q_\\text{A1}",
                 "anchor": "default",
                 "position": "default",
                 "distance": "0.12cm"
@@ -424,7 +424,7 @@
         {
             "type": "node",
             "label": {
-                "value": "U_\\text{M2}",
+                "value": "Q_\\text{M2}",
                 "anchor": "default",
                 "position": "default",
                 "distance": "0.12cm"
@@ -438,7 +438,7 @@
         {
             "type": "node",
             "label": {
-                "value": "U_\\text{M1}",
+                "value": "Q_\\text{M1}",
                 "anchor": "default",
                 "position": "default",
                 "distance": "0.12cm"
@@ -917,7 +917,7 @@
         {
             "type": "node",
             "label": {
-                "value": "U_\\text{E}",
+                "value": "Q_\\text{E}",
                 "anchor": "default",
                 "position": "default",
                 "distance": "0.12cm"
@@ -1059,7 +1059,7 @@
         {
             "type": "node",
             "label": {
-                "value": "U_\\text{D}",
+                "value": "Q_\\text{D}",
                 "anchor": "default",
                 "position": "default",
                 "distance": "0.12cm"
@@ -1209,7 +1209,7 @@
                 }
             ],
             "label": {
-                "value": "D_\\text{D}",
+                "value": "D_\\text{F}",
                 "otherSide": true,
                 "distance": "0.12cm"
             },

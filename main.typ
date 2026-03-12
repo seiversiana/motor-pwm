@@ -143,7 +143,7 @@ as in @s:astable. We can also use $R_"MC1" = R_"AC"$ and $R_"MB1" = R_"AB"$,
 since the values needed to saturate the transistors stay the same. For this
 stage, we want the duty cycle to vary throughout the range of $D_"S"$. This is
 done by varing $R_"MB1"$. Note that $R_"MB1" = R_"AB"$ is the maximum value of
-the resistor; going above this will not supply the base of $U_"M2"$ with enough
+the resistor; going above this will not supply the base of $Q_"M2"$ with enough
 current to sustain saturation with $I_"C" = #qty(10, "mA")$. Now, since the duty
 cycle of this stage $D_"M"$ is directly proportional to $R_"MB1"$, we want
 $R_"MB1, max" = R_"AB"$ to give us the duty cycle $D_"S, max" = #qty(80, "%")$.
@@ -201,12 +201,12 @@ $
 $ <f:1n4148freq>
 
 Our needed frequency is way below this limit. Now, we want a sufficient current
-at the base of $U_"M1"$ so that the transistor will reliably discharge $C_"M"$ and
+at the base of $Q_"M1"$ so that the transistor will reliably discharge $C_"M"$ and
 allow the cross-coupling to take over. Let's set $I_"C" = #qty(50, "mA")$ and
 $I_"B" = #qty(5, "mA")$. This gives us a $V_"BE, sat" = #qty(0.95, "V")$
 @2n3904. Note that the forward voltage of the 1N4148 at this current is
 $V_"F" = #qty(0.65, "V")$ @1n4148. With this information, we can solve for
-$I_"out, A"$ by doing KVL through $R_"AC2"$ and the base of $U_"M1"$ @f:aouti:
+$I_"out, A"$ by doing KVL through $R_"AC2"$ and the base of $Q_"M1"$ @f:aouti:
 
 $
 	V_"CC" - I_"out, A" dot R_"AC2" - V_"F" - V_"BE, sat" = 0 \
@@ -264,9 +264,9 @@ the monostable multivibrator is shown in @i:chopper.
 ) <i:chopper>
 
 In order to analyze this final section, we first need to know the current that
-the collector of $U_"D"$ will be receiving. A common stall current for a #qty(6, "V")
+the collector of $Q_"D"$ will be receiving. A common stall current for a #qty(6, "V")
 size 130 brushed motor is around #qty(800, "mA"), which is the maximum
-$I_"C"$ of $U_"D"$. For this, we will need to use a power transistor. One such
+$I_"C"$ of $Q_"D"$. For this, we will need to use a power transistor. One such
 transistor is the TIP31C, which can handle up to #qty(3, "A") of collector
 current @tip31c. This is more than enough for our needs. In order to get our
 collector current, we need to saturate the transistor by setting $beta = 10$ or
@@ -282,7 +282,7 @@ monostable multivibrator.
 
 We won't be using the 2N3904 here as the collector current that we will need
 is almost near its maximum rating of #qty(200, "mA"), which risks overheating. Instead, let's use the 2N4401, which is rated for collector currents of up to #qty(600, "mA")
-@2n4401. Let's set the $I_"C"$ of $U_"E"$ to be #qty(100, "mA"), so that we
+@2n4401. Let's set the $I_"C"$ of $Q_"E"$ to be #qty(100, "mA"), so that we
 have more than enough current at the emitter to drive the DC chopper. Note that
 an emitter follower does not go into saturation; instead it sits inside
 forward-active. From the datasheet @2n4401, the closest $beta$ for our $I_C$ is
@@ -351,8 +351,8 @@ A table of the theoretical component values and models are shown in @t:astable,
 	table(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
-		$U_"A1"$ , [2N3904],
-		$U_"A2"$ , [2N3904],
+		$Q_"A1"$ , [2N3904],
+		$Q_"A2"$ , [2N3904],
 		$R_"AC1"$, qty(580, "O"),
 		$R_"AC2"$, qty(580, "O"),
 		$R_"AB1"$, qty(5.25, "kO"),
@@ -378,8 +378,8 @@ A table of the theoretical component values and models are shown in @t:astable,
 	table(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
-		$U_"M1"$       , [2N3904],
-		$U_"M2"$       , [2N3904],
+		$Q_"M1"$       , [2N3904],
+		$Q_"M2"$       , [2N3904],
 		$R_"MC1"$      , qty(580, "O"),
 		$R_"MC2"$      , qty(580, "O"),
 		$R_"MB1, min"$ , qty(3.28, "kO"),
@@ -397,7 +397,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 	table(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
-		$U_"E"$ , [2N4401],
+		$Q_"E"$ , [2N4401],
 		$R_"EB"$, qty(3.75, "kO"),
 		$R_"EE"$, qty(235.29, "O"),
 	),
@@ -409,7 +409,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$M$     , [#qty(6, "V") size 130 \ brushed DC motor],
-		$U_"D"$ , [TIP31C],
+		$Q_"D"$ , [TIP31C],
 		$D_"D"$ , [1N4007],
 		$R_"DB"$, qty(53.75, "O"),
 	),
