@@ -63,7 +63,7 @@
 
 
 
-= Introduction
+= Source
 The Git repository for this project is located at
 https://github.com/seiversiana/motor-pwm. Included are the license, source code,
 image files, and LTSpice files.
