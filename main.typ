@@ -27,6 +27,29 @@
 	columns: (6em, auto),
 	align: (left, right),
 	inset: (x: 8pt, y: 4pt),
+	stroke: (x, y) => if y <= 1 { (top: 0.5pt) },
+	fill: (x, y) => if y > 0 and calc.rem(y, 2) == 0  { rgb("#efefef") },
+)
+
+#let vstable = table.with(
+	columns: (6em, auto),
+	align: (x, y) => if x == 0 { left } else { right },
+	inset: (x: 8pt, y: 4pt),
+	stroke: (x, y) => {
+		if x == 0 {
+			(right: 0.5pt)
+		}
+		if y <= 1 {
+			(top: 0.5pt)
+		}
+	},
+	fill: (x, y) => if y > 0 and calc.rem(y, 2) == 0  { rgb("#efefef") },
+)
+
+#let dtable = table.with(
+	columns: (6em, auto),
+	align: (left, right),
+	inset: (x: 8pt, y: 4pt),
 	stroke: (x, y) => {
 		if x == 1 {
 			(right: 0.5pt)
@@ -77,6 +100,7 @@ The block diagram of the system is shown in @d:block.
 		node((0, 2.1), [DC Chopper])
 	),
 	caption: [Block diagram of the PWM motor controller system.],
+	placement: none
 ) <d:block>
 
 == Astable Multivibrator <s:astable>
@@ -355,7 +379,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 @t:trigger, @t:monostable, @t:emitterfollower, and @t:chopper.
 
 #figure(
-	table(
+	dtable(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$Q_"A1"$ , [2N3904],
@@ -367,22 +391,24 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$C_"A1"$ , qty(24.98, "nF"),
 		$C_"A2"$ , qty(24.98, "nF")
 	),
-	caption: [Component Values/Models for the Astable Multivbrator]
+	caption: [Component Values/Models for the Astable Multivbrator],
+	placement: top
 ) <t:astable>
 
 #figure(
-	table(
+	dtable(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$D_"T"$, [1N4148],
 		$R_"T"$, qty(618.67, "O"),
 		$C_"T"$, qty(14.69, "nF")
 	),
-	caption: [Component Values/Models for the Monostable Multivibrator\ Trigger]
+	caption: [Component Values/Models for the Monostable Multivibrator\ Trigger],
+	placement: top
 ) <t:trigger>
 
 #figure(
-	table(
+	dtable(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$Q_"M1"$       , [2N3904],
@@ -395,24 +421,24 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$R_"MB2"$      , qty(4.67, "kO"),
 		$C_"M"$       , qty(39.97, "nF")
 	),
-	caption: [
-		Component Values/Models for the Monostable Multivbrator
-	]
+	caption: [Component Values/Models for the Monostable Multivbrator],
+	placement: top
 ) <t:monostable>
 
 #figure(
-	table(
+	dtable(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$Q_"E"$ , [2N4401],
 		$R_"EB"$, qty(3.75, "kO"),
 		$R_"EE"$, qty(235.29, "O")
 	),
-	caption: [Component Values/Models for the Emitter Follower]
+	caption: [Component Values/Models for the Emitter Follower],
+	placement: top
 ) <t:emitterfollower>
 
 #figure(
-	table(
+	dtable(
 		columns: 4,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$M$     , [#qty(6, "V") size 130 \ brushed DC motor],
@@ -428,3 +454,35 @@ A table of the theoretical component values and models are shown in @t:astable,
 = Simulation
 == Original Values
 In order to simulate the PWM motor controller system, we will use LTSpice.
+First, we will be simulating the circuit using the original non-standard values
+given in @t:astable, @t:trigger, @t:monostable, @t:emitterfollower, and
+@t:chopper. For all simulations, we will step $R_"P"$ through its minimum and
+maximum values: $R_"P, min" = #qty(0, "O")$ and $R_"P, max" = #qty(1, "MO")$. However,
+LTSpice doesn't allow stepping with #qty(0, "O") resistors, so we'll instead
+use a minimum of $R_"P, min" = #qty(1, "nO")$.
+
+With the original values, we get the following measurements, shown in
+@t:original.
+
+#figure(
+	vstable(
+		columns: 3,
+		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
+		[Frequency] , qty(6.17, "kHz"), qty(6.16, "kHz"),
+		[Duty Cycle], qty(44.05, "%") , qty(69.58, "%")
+	),
+	caption: [Simulation Measurements of the Original Circuit]
+) <t:original>
+
+Unfortunately, all of our measured values are all out of spec, even considering
+the tolerances. The divergence of values probably stem from the fact that the
+$T = R C ln 2$ formula is not 100% accurate in practice; for example, the
+capacitors don't discharge to #qty(0, "V"), they instead discharge to the CE
+saturation voltage $V_"CE, sat" = #qty(0.2, "V")$. $V_"BE, sat"$ is also not
+entirely accurate; the 2N3904 datasheet @2n3904 specifies a range and not a
+constant value.
+
+== Modified, Partially Standard Values
+In order to fix the discrepancies in the frequency and duty cycle of the system,
+we will simply just try nearby standard values and find the values which
+correspond to the least error in the measurements.
