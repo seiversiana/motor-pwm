@@ -4,7 +4,7 @@
 #import "@preview/charged-ieee:0.1.4": ieee
 
 #import "@preview/fletcher:0.5.8": diagram, node, edge
-#import "@preview/unify:0.7.1": qty, qtyrange
+#import "@preview/unify:0.7.1": num, qty, qtyrange,
 
 #show: ieee.with(
 	title: "PWM Motor Controller",
@@ -212,7 +212,7 @@ Here, $R_"P"$ is the potentiometer resistance, where $R_"P, max" >> Delta R_"MB1
 and $R_"P, min" = #qty(0, "O")$. This makes it so that when $R_"P" = R_"P, min"$,
 $R_"MB1" = R_"MB1, min"$, and when $R_"P" = R_"P, max"$,
 $R_"MB1" approx R_"MB1, max"$. Let's use an $R_"P" = #qtyrange(0, 1, "MO")$, so
-that there is a minimal deviation between the original and maximum varied
+that there is minimal deviation between the original and maximum varied
 $R_"MB1, max"$.
 
 Next, we can solve for $R_"MB2"$. Note that the base current $I_"B"$ should be
@@ -396,9 +396,9 @@ A table of the theoretical component values and models are shown in @t:astable,
 ) <t:astable>
 
 #figure(
-	dtable(
-		columns: 4,
-		table.header[Component][Value/Model][Component][Value/Model],
+	table(
+		columns: 2,
+		table.header[Component][Value/Model],
 		$D_"T"$, [1N4148],
 		$R_"T"$, qty(618.67, "O"),
 		$C_"T"$, qty(14.69, "nF")
@@ -426,9 +426,9 @@ A table of the theoretical component values and models are shown in @t:astable,
 ) <t:monostable>
 
 #figure(
-	dtable(
-		columns: 4,
-		table.header[Component][Value/Model][Component][Value/Model],
+	table(
+		columns: 2,
+		table.header[Component][Value/Model],
 		$Q_"E"$ , [2N4401],
 		$R_"EB"$, qty(3.75, "kO"),
 		$R_"EE"$, qty(235.29, "O")
@@ -491,7 +491,7 @@ saturation voltage $V_"CE, sat" = #qty(0.2, "V")$. $V_"BE, sat"$ is also not
 entirely accurate; the 2N3904 datasheet @2n3904 specifies a range and not a
 constant value.
 
-== Modified, Partially Standardized Components
+== Altered, Partially Standardized Components
 In order to fix the discrepancies in the frequency and duty cycle of the system,
 we will simply just try nearby standard values and find the values which
 correspond to the least error in the measurements. As much as possible, we want
@@ -531,7 +531,7 @@ With the new values, the new measurements are shown in @t:partial.
 
 These values are now well within the specifications for frequency and duty cycle.
 
-== Modified, Fully Standardized Components
+== Altered, Fully Standardized Components
 The last step is to replace all other components with standard-valued near
 equivalents. Standardizing all of the values reduced the frequency a bit, so
 new values had to be picked for $R_"AB1"$ and $R_"AB2"$. The duty cycle
@@ -587,17 +587,42 @@ $
 $ <f:pee>
 
 While both of these are well within the rating of a #qty(0.25, "W") resistor,
-just to be safe, let's specify $P_"DB"$ to be a #qty(0.5, "W") resistor instead.
+just to be safe, let's specify $R_"DB"$ to be a #qty(0.5, "W") resistor instead.
 
 
 
 = Implementation
 == Bill of Materials
-The bill of materials is shown in
+At last, the bill of materials for the PWM motor controller system is shown in
+@t:bill.
 
 #figure(
 	table(
 		columns: 2,
-		table.header[]
-	)
-)
+		table.header[Component][Quantity],
+		[TO-220 Heatsink]                       , num(1),
+		[#qty(6, "V") size 130 brushed DC motor], num(1),
+		[2N3904 NPN Transistor]                 , num(4),
+		[2N4401 NPN Transistor]                 , num(1),
+		[TIP31C NPN Transistor, TO-220]         , num(1),
+		[1N4007 Rectifier Diode]                , num(1),
+		[1N4148 Signal Diode]                   , num(1),
+		[#qty(51, "O") Resistor, #qty(0.5, "W")], num(1),
+		[#qty(100, "O") Resistor]               , num(1),
+		[#qty(200, "O") Resistor]               , num(1),
+		[#qty(240, "O") Resistor]               , num(1),
+		[#qty(270, "O") Resistor]               , num(2),
+		[#qty(560, "O") Resistor]               , num(4),
+		[#qty(620, "O") Resistor]               , num(1),
+		[#qty(2.4, "kO") Resistor]              , num(1),
+		[#qty(3.6, "kO") Resistor]              , num(1),
+		[#qty(3.9, "kO") Resistor]              , num(1),
+		[#qty(4.7, "kO") Resistor]              , num(1),
+		[#qty(5.1, "kO") Resistor]              , num(2),
+		[#qty(15, "nF") Ceramic Capacitor]      , num(1),
+		[#qty(27, "nF") Ceramic Capacitor]      , num(2),
+		[#qty(39, "nF") Ceramic Capacitor]      , num(1)
+	),
+	caption: [Bill of Materials for the PWM Motor Controller System],
+	placement: none
+) <t:bill>
