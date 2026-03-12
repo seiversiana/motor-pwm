@@ -65,8 +65,8 @@
 
 = Introduction
 The Git repository for this project is located at
-https://github.com/seiversiana/motor-pwm. This includes the license, the Typst
-files, the images and image sources, and the LTSpice files.
+https://github.com/seiversiana/motor-pwm. Included are the license, source code,
+image files, and LTSpice files.
 
 
 
@@ -113,7 +113,7 @@ The circuit diagram of the astable multivibrator is shown in @i:astable.
 
 In order to design the astable multivibrator stage, we first need to choose
 a transistor. The 2N3904 is a general-purpose low-current switching transistor
-that is perfect for our purposes. According to its datasheet @2n3904, we can
+that is perfect for our purposes. From its datasheet @2n3904, we can
 solve for its maximum frequency @f:2n3904freq:
 
 $
@@ -130,11 +130,11 @@ can solve for the needed resistor values. To simplify the calculations, let's
 assume an average base saturation voltage $V_"BE, sat" = #qty(0.75, "V")$
 instead.
 
-In order to further simplify calculations and to reduce the number of unique
+In order to further simplify calculations and reduce the number of unique
 components, we can recognize that the duty cycle of this stage does not matter,
 since only the rising edge of the output will be used to trigger the monostable
 multivibrator. This is independent of duty cycle, and only requires that the
-frequency be constant. Therefore we assume a duty cycle $D_"A" = #qty(50, "%")$
+frequency be constant. Therefore, we assume a duty cycle $D_"A" = #qty(50, "%")$
 and set $R_"AB1" = R_"AB2" = R_"AB"$, $R_"AC1" = R_"AC2" = R_"AC"$, and
 $C_"A1" = C_"A2" = C_"A"$. The calculation for the base and collector resistors
 are shown in @f:abase and @f:acollector.
@@ -171,13 +171,13 @@ multivibrator is shown in @i:monostable.
 
 For the monostable multivibrator, we use the 2N3904 again for the same reasons
 as in @s:astable. We can also use $R_"MC1" = R_"AC"$ and $R_"MB1" = R_"AB"$,
-since the values needed to saturate the transistors stay the same. For this
-stage, we want the duty cycle to vary throughout the range of $D_"S"$. This is
-done by varing $R_"MB1"$. Note that $R_"MB1" = R_"AB"$ is the maximum value of
+since the currents needed to saturate the transistors stay the same. For this
+stage, we want the duty cycle to vary throughout the range of $D_"S"$, which is
+done by varying $R_"MB1"$. Note that $R_"MB1" = R_"AB"$ is the maximum value of
 the resistor; going above this will not supply the base of $Q_"M2"$ with enough
 current to sustain saturation with $I_"C" = #qty(10, "mA")$. Now, since the duty
 cycle of this stage $D_"M"$ is directly proportional to $R_"MB1"$, we want
-$R_"MB1, max" = R_"AB"$ to give us the duty cycle $D_"S, max" = #qty(80, "%")$.
+$R_"MB1, max" = R_"AB"$ to give us the maximum duty cycle $D_"S, max" = #qty(80, "%")$.
 
 We will need to recalculate $C_"M"$ because of this. This is shown in
 @f:mcapd and @f:mcapv.
@@ -199,7 +199,7 @@ $
 	R_"MB1, min" = D_"S, min"/(C_"M" f_"S" ln 2) = #qty(3.28, "kO")
 $ <f:mminbase>
 
-We have a resistance difference of $Delta R_"MB1" = #qty(1.97, "kO")$. In
+From this, we have a resistance difference of $Delta R_"MB1" = #qty(1.97, "kO")$. In
 order to vary $R_"MB1"$ throughout its minimum and maximum values, we can have
 a resistor network as shown in @i:rmb1.
 
@@ -211,13 +211,13 @@ a resistor network as shown in @i:rmb1.
 Here, $R_"P"$ is the potentiometer resistance, where $R_"P, max" >> Delta R_"MB1"$,
 and $R_"P, min" = #qty(0, "O")$. This makes it so that when $R_"P" = R_"P, min"$,
 $R_"MB1" = R_"MB1, min"$, and when $R_"P" = R_"P, max"$,
-$R_"MB1" approx R_"MB1, max"$. Let's use an $R_"P" = #qtyrange(0, 1, "MO")$, so
+$R_"MB1" approx R_"MB1, max"$. Let's use a potentiometer resistance $R_"P" = #qtyrange(0, 1, "MO")$, so
 that there is minimal deviation between the original and maximum varied
 $R_"MB1, max"$.
 
 Next, we can solve for $R_"MB2"$. Note that the base current $I_"B"$ should be
 #qty(1, "mA") for saturation, which means that the equivalent resistance must
-allow for this. Fortunately, we've already calculated this value before in @f:abase.
+allow for this. Fortunately, we have already calculated this value before in @f:abase.
 Setting $R_"MC2" = R_"MC1"$ and solving for $R_"MB2"$:
 
 $ R_"MB2" = R_"AB" - R_"MC2" = #qty(4.67, "kO") $
@@ -231,7 +231,7 @@ $
 	f_"max" = 1/t_"rr" = #qty(250, "MHz")
 $ <f:1n4148freq>
 
-Our needed frequency is way below this limit. Now, we want a sufficient current
+Our specified frequency is way below this limit. Now, we want a sufficient current
 at the base of $Q_"M1"$ so that the transistor will reliably discharge $C_"M"$ and
 allow the cross-coupling to take over. Let's set $I_"C" = #qty(50, "mA")$ and
 $I_"B" = #qty(5, "mA")$. This gives us a $V_"BE, sat" = #qty(0.95, "V")$
@@ -257,7 +257,7 @@ $
 	V_"T" = V_"F" + V_"BE, sat" = #qty(1.6, "V")
 $ <f:tvoltage>
 
-We can now solve for $R_"T"$ @f:tresistance:
+Then we can solve for $R_"T"$ @f:tresistance:
 
 $
 	R_"T" = V_"T"/I_"T" = #qty(618.67, "O")
@@ -265,10 +265,9 @@ $ <f:tresistance>
 
 Finally, in order to solve for $C_"T"$, we want a pulse width that is long enough
 to start regeneration and short enough that the capacitor fully resets before
-the next cycle. A common value for this pulse width is
-$#qty(10, "%") dot T_"on, min"$. We can use $T_"pulse" = R_"T" C_"T"$ for this
-as we have a bit of leeway because our desired pulse width is much less than
-the period. We can then solve
+the next cycle. A general value for this pulse width is
+$#qty(10, "%") dot T_"on, min"$. With this, we have a bit of leeway, so we can
+use the rough approximation $T_"pulse" = R_"T" C_"T"$. We can then solve
 for $C_"T"$, as shown in @f:tcapd and @f:tcapv.
 
 $
@@ -282,7 +281,7 @@ $
 	C_"T" = (#qty(10, "%") dot D_"S, min")/(R_"T" f_"S") = #qty(14.69, "nF")
 $ <f:tcapv>
 
-== Buffer and DC Chopper
+== Emitter Follower and DC Chopper
 The circuit diagram of the DC chopper coupled to the emitter follower and
 the monostable multivibrator is shown in @i:chopper.
 
@@ -294,13 +293,13 @@ the monostable multivibrator is shown in @i:chopper.
 	]
 ) <i:chopper>
 
-In order to analyze this final section, we first need to know the current that
-the collector of $Q_"D"$ will be receiving. A common stall current for a #qty(6, "V")
-size 130 brushed motor is around #qty(800, "mA"), which is the maximum
+In order to analyze this final section, we first need to know the collector current of
+$Q_"D"$. A common stall current for a #qty(6, "V")
+size 130 brushed motor is around #qty(800, "mA"), which will be the maximum
 $I_"C"$ of $Q_"D"$. For this, we will need to use a power transistor. One such
 transistor is the TIP31C, which can handle up to #qty(3, "A") of collector
-current @tip31c. This is more than enough for our needs. In order to get our
-collector current, we need to saturate the transistor by setting $beta = 10$ or
+current @tip31c, which is more than enough for our needs. In order to get our
+collector current, we need to saturate the transistor by forcing $beta = 10$ or
 equivalently, $I_"B" = I_"C"/10 = #qty(80, "mA")$ @tip31c. We also have
 $V_"BE, sat" = #qty(0.7, "V")$ and $V_"CE, sat" = #qty(0.25, "V")$ in these
 conditions.
@@ -366,7 +365,9 @@ use the 1N4007, as it has a maximum surge current of #qty(30, "A") @1n4007,
 which is much higher than the flyback current that it will experience with
 regular use.
 
-The full theoretical circuit is shown in @i:fulltheoretical.
+The full theoretical circuit is shown in @i:fulltheoretical. A table of the
+theoretical component values and models are shown in @t:astable,
+@t:trigger, @t:monostable, @t:emitterfollower, and @t:chopper.
 
 #figure(
 	image("assets/fulltheoretical.png"),
@@ -374,9 +375,6 @@ The full theoretical circuit is shown in @i:fulltheoretical.
 	placement: auto,
 	scope: "parent"
 ) <i:fulltheoretical>
-
-A table of the theoretical component values and models are shown in @t:astable,
-@t:trigger, @t:monostable, @t:emitterfollower, and @t:chopper.
 
 #figure(
 	dtable(
@@ -485,22 +483,24 @@ With the original values, we get the following measurements, shown in
 
 Unfortunately, all of our measured values are all out of spec, even considering
 the tolerances. The divergence of values probably stem from the fact that the
-$T = R C ln 2$ formula is not 100% accurate in practice; for example, the
+$T = R C ln 2$ formula is not completely accurate in practice; for example, the
 capacitors don't discharge to #qty(0, "V"), they instead discharge to the CE
 saturation voltage $V_"CE, sat" = #qty(0.2, "V")$. $V_"BE, sat"$ is also not
 entirely accurate; the 2N3904 datasheet @2n3904 specifies a range and not a
 constant value.
 
 == Altered, Partially Standardized Components
-In order to fix the discrepancies in the frequency and duty cycle of the system,
+In order to fix the discrepancies in the frequency and duty cycles of the system,
 we will simply just try nearby standard values and find the values which
-correspond to the least error in the measurements. As much as possible, we want
+correspond to the least error in these measurements. As much as possible, we want
 to avoid modifying the resistor values too much, as this may cause the
 transistors to fall out of saturation. Instead, we'll vary the capacitors first,
 and then vary the resistors.
 
 The new values of various components are shown in @t:partialcomponents. Note that
-these values may be combinations of two standard-valued components.
+these values may be combinations of two standard-valued components. With the new
+values, the new measurements are shown in @t:partial. These values are now well
+within the specifications for frequency and duty cycle.
 
 #figure(
 	table(
@@ -517,8 +517,6 @@ these values may be combinations of two standard-valued components.
 	caption: [New Component Values of the Partially Standardized Circuit]
 ) <t:partialcomponents>
 
-With the new values, the new measurements are shown in @t:partial.
-
 #figure(
 	vstable(
 		columns: 3,
@@ -529,14 +527,13 @@ With the new values, the new measurements are shown in @t:partial.
 	caption: [Simulation Measurements of the Partially Standardized Circuit]
 ) <t:partial>
 
-These values are now well within the specifications for frequency and duty cycle.
-
 == Altered, Fully Standardized Components
 The last step is to replace all other components with standard-valued near
 equivalents. Standardizing all of the values reduced the frequency a bit, so
 new values had to be picked for $R_"AB1"$ and $R_"AB2"$. The duty cycle
 components were left unchanged. The new fully standardized values are shown
-in @t:fullcomponents
+in @t:fullcomponents. With the fully standardized values, the new measurements
+are shown in @t:full.
 
 #figure(
 	dtable(
@@ -559,8 +556,6 @@ in @t:fullcomponents
 	placement: top
 ) <t:fullcomponents>
 
-With the fully standardized values, the new measurements are shown in @t:full.
-
 #figure(
 	vstable(
 		columns: 3,
@@ -573,9 +568,9 @@ With the fully standardized values, the new measurements are shown in @t:full.
 
 These values are still well within the specifications. Before we continue to
 the physical implementation of the circuit, let's first check the wattages of
-the relatively-high current resistors. In particular, we want to check $R_"DB"$
+the relatively high-current resistors. In particular, we want to check $R_"DB"$
 and $R_"EE"$. According to LTSpice, $I_"DB" approx #qty(45.9, "mA")$ and
-$I_"EE" approx #qty(14.6, "mA")$. We can solve for the power dissipation of
+$I_"EE" approx #qty(14.6, "mA")$. With this, we can solve for the power dissipation of
 the resistors as shown in @f:pdb and @f:pee.
 
 $
