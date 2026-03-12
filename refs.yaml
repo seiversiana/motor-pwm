@@ -1,0 +1,21 @@
+2n3904:
+  type: Reference
+  title: 2N3904DB - NPN General - Purpose Amplifier - 2N3904-D
+  author: Onsemi
+  date: 2024-10
+  url: https://www.onsemi.com/download/data-sheet/pdf/2n3904-d.pdf
+
+astable:
+  type: Web
+  title: Astable Multivibrator and Astable Oscillator Circuit
+  author: Electronics Tutorials
+  url:
+    value: https://www.electronics-tutorials.ws/waveforms/astable.html
+    date: 2026-03-12
+
+1n4148:
+  type: Reference
+  title: 1N914 - Small Signal Diode - 1N914-D
+  author: Onsemi
+  date: 2024-09
+  url: https://www.onsemi.com/download/data-sheet/pdf/1n914-d.pdf
