@@ -461,6 +461,15 @@ maximum values: $R_"P, min" = #qty(0, "O")$ and $R_"P, max" = #qty(1, "MO")$. Ho
 LTSpice doesn't allow stepping with #qty(0, "O") resistors, so we'll instead
 use a minimum of $R_"P, min" = #qty(1, "nO")$.
 
+Also note, the motor was replaced by a #qty(7.19, "O") resistor. This was calculated
+by doing a KVL through the motor and the TIP31C, and by taking into account the
+stall current of the motor @f:motorresist:
+
+$
+	V_"CC" - I_"stall" R_"M" - V_"CE, sat" = 0 \
+	R_"M" = (V_"CC" - V_"CE, sat")/I_"stall" = #qty(7.19, "O")
+$ <f:motorresist>
+
 With the original values, we get the following measurements, shown in
 @t:original.
 
@@ -469,7 +478,7 @@ With the original values, we get the following measurements, shown in
 		columns: 3,
 		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
 		[Frequency] , qty(6.17, "kHz"), qty(6.16, "kHz"),
-		[Duty Cycle], qty(44.05, "%") , qty(69.58, "%")
+		[Duty Cycle], qty(44.1, "%") , qty(69.59, "%")
 	),
 	caption: [Simulation Measurements of the Original Circuit]
 ) <t:original>
@@ -515,7 +524,7 @@ With the new values, the new measurements are shown in @t:partial.
 		columns: 3,
 		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
 		[Frequency] , qty(5.50, "kHz"), qty(5.48, "kHz"),
-		[Duty Cycle], qty(50.31, "%") , qty(79.93, "%")
+		[Duty Cycle], qty(50.36, "%") , qty(79.91, "%")
 	),
 	caption: [Simulation Measurements of the Partially Standardized Circuit]
 ) <t:partial>
@@ -557,7 +566,7 @@ With the fully standardized values, the new measurements are shown in @t:full.
 		columns: 3,
 		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
 		[Frequency] , qty(5.49, "kHz"), qty(5.48, "kHz"),
-		[Duty Cycle], qty(50.23, "%") , qty(79.82, "%")
+		[Duty Cycle], qty(50.26, "%") , qty(79.79, "%")
 	),
 	caption: [Simulation Measurements of the Fully Standardized Circuit]
 ) <t:full>
@@ -584,3 +593,11 @@ just to be safe, let's specify $P_"DB"$ to be a #qty(0.5, "W") resistor instead.
 
 = Implementation
 == Bill of Materials
+The bill of materials is shown in
+
+#figure(
+	table(
+		columns: 2,
+		table.header[]
+	)
+)
