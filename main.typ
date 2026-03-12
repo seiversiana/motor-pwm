@@ -40,6 +40,13 @@
 
 
 
+= Introduction
+The Git repository for this project is located at
+https://github.com/seiversiana/motor-pwm. This includes the license, the Typst
+files, the images and image sources, and the LTSpice files.
+
+
+
 = Theory
 == Specifications
 We are tasked to create a PWM motor controller by cascading an astable
@@ -415,3 +422,9 @@ A table of the theoretical component values and models are shown in @t:astable,
 	),
 	caption: [Component Values/Models for the DC Chopper]
 )  <t:chopper>
+
+
+
+= Simulation
+== Original Values
+In order to simulate the PWM motor controller system, we will use LTSpice.
