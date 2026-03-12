@@ -330,7 +330,7 @@ $
 	R_"EB" = V_"out, M"/I_"EB" = #qty(3.75, "kO")
 $ <f:ereb>
 
-The last thing to do is to decide what flyback diode $D_"D"$ to use. We will
+The last thing to do is to decide what flyback diode $D_"F"$ to use. We will
 use the 1N4007, as it has a maximum surge current of #qty(30, "A") @1n4007,
 which is much higher than the flyback current that it will experience with
 regular use.
@@ -410,7 +410,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		table.header[Component][Value/Model][Component][Value/Model],
 		$M$     , [#qty(6, "V") size 130 \ brushed DC motor],
 		$Q_"D"$ , [TIP31C],
-		$D_"D"$ , [1N4007],
+		$D_"F"$ , [1N4007],
 		$R_"DB"$, qty(53.75, "O")
 	),
 	caption: [Component Values/Models for the DC Chopper]
