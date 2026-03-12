@@ -371,7 +371,7 @@ A table of the theoretical component values and models are shown in @t:astable,
 		$R_"T"$, qty(618.67, "O"),
 		$C_"T"$, qty(14.69, "nF")
 	),
-	caption: [Component Values/Models for the Monostable Multivibrator Trigger]
+	caption: [Component Values/Models for the Monostable Multivibrator\ Trigger]
 ) <t:trigger>
 
 #figure(
