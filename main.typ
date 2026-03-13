@@ -602,6 +602,7 @@ At last, the bill of materials for the PWM motor controller system is shown in
 		[TIP31C NPN Transistor, TO-220]         , num(1),
 		[1N4007 Rectifier Diode]                , num(1),
 		[1N4148 Signal Diode]                   , num(1),
+		[#qty(1, "MO") Potentiometer], num(1),
 		[#qty(51, "O") Resistor, #qty(0.5, "W")], num(1),
 		[#qty(100, "O") Resistor]               , num(1),
 		[#qty(200, "O") Resistor]               , num(1),
