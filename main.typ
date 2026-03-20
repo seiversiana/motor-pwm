@@ -470,9 +470,9 @@ to the specifications, so that real life tolerances won't nudge it out of the sp
 
 One problem is that the equation for the frequency of an astable multivibrator
 is just an ideal model, which assumes that the transistors instantly switch from
-cut-off to saturation, or that $V_"BE"$ and $V_"CE"$ are constant. It also doesn't
+cut-off to saturation, and that $V_"BE"$ and $V_"CE"$ are constant. It also doesn't
 take into account the fact that the astable multivibrator might be loaded; in our case,
-it is loaded by the monostable multivibrator trigger circuit, which may cause
+it is loaded by the monostable multivibrator trigger circuit, which may have caused
 the frequencies to drift.
 
 Our duty cycles are a lot closer, but they can be better. A probable cause for
@@ -523,8 +523,9 @@ of the circuit are shown in @t:partlymeasurements.
 ) <t:partlymeasurements>
 
 The frequency and duty cycle is now within specifications. Note that the
-#qty(4.62, "kO") resistors are actually two #qty(2.2, "kO") resistors and a #qty(220, "O") resistor in series, and the #qty(2.5, "kO") resistor is actually two #qty(150, "O") resistors
-and a #qty(2.2, "kO") resistor in series.
+#qty(4.62, "kO") resistors are actually two #qty(2.2, "kO") resistors and a
+#qty(220, "O") resistor in series, and the #qty(2.5, "kO") resistor is actually
+two #qty(150, "O") resistors and a #qty(2.2, "kO") resistor in series.
 
 == Completely Standardized Values
 Lastly, we will need to pick standard values for all of the components. The measurements
@@ -604,8 +605,8 @@ At last, shown in @t:bill is the bill of materials for the PWM motor controller.
 ) <t:bill>
 
 Unfortunately, I wasn't able to procure all of these components exactly; some
-resistors in particular are not quite the right values. However, none of them
-were the important timing resistors, so close but not exact values for them are fine.
+resistors in particular are not the right values. However, none of them
+were the important timing resistors, so close, but not quite right values for them are fine.
 The list of changed components is found in @t:changed.
 
 #figure(
@@ -639,8 +640,8 @@ The breadboard construction of the circuit is shown in @i:breadboard.
 
 The voltage source here is a pack of four #qty(1.5, "V") AA batteries in series. From the
 last simulation, the current through the voltage source was around #qty(800, "mA").
-The carbon-zinc batteries that I am using is not at all suitable for this use-case,
-as it has high internal resistances especially when used under this amount of current.
+The carbon-zinc batteries that I am using are not at all suitable for this use-case,
+as they have high internal resistances especially when used under this amount of current.
 This is shown by the fact that the breadboard circuit does not generate the
 expected #qty(5.5, "kHz") square wave; the frequency is around #qty(5.3, "kHz") instead.
 From LTSpice, this is consistent with a voltage source of #qty(4, "V"), which confirms
@@ -648,9 +649,8 @@ that each of the batteries have dropped to around #qty(1, "V") trying to sustain
 the high current. For this, alkaline batteries should be used instead.
 
 In order to test the frequency of the circuit at home without an oscilloscope, I simply
-connected the output which is normally connected to the motor to a pair of unused
-headphones that I didn't care about anymore. I compared the sound from the headphones
-to an online square wave generator, and varied the frequency on the website until both
-of the sounds matched. Doing this also confirmed that the multivibrators were working,
-since there wouldn't be any sound coming from the headphones if there wasn't some output
-wave from the circuit.
+connected the output which was normally connected to the motor to a pair of unused
+headphones. I compared the sound from the headphones to an online square wave generator,
+and varied the frequency on the website until both of the sounds matched. Doing this
+also confirmed that the multivibrators were working, since there wouldn't be any sound
+coming from the headphones if there wasn't some output wave from the circuit.
