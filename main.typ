@@ -122,9 +122,9 @@ $ <f:2n3904freq>
 
 Our needed frequency is safely within this limit. Now, since the astable
 multivibrator cycles its transistors between cut-off and saturation, we need to
-determine the currents and resistor values in order to let the transistors go
+determine the currents and resistor values needed in order to let the transistors go
 into saturation. From the datasheet @2n3904, we have $V_"CE, sat" = #qty(0.2, "V")$
-and $V_"BE, sat" = #qtyrange(0.65, 0.85, "V")$ for current conditions
+and $V_"BE, sat" = #qtyrange(0.65, 0.85, "V")$ for the current conditions
 $I_"C" = #qty(10, "mA")$ and $I_"B" = #qty(1, "mA")$. Using this information, we
 can solve for the needed resistor values. To simplify the calculations, let's
 assume an average base saturation voltage $V_"BE, sat" = #qty(0.75, "V")$
@@ -290,14 +290,15 @@ equivalently, $I_"B" = I_"C"/10 = #qty(80, "mA")$ @tip31c. We also have
 $V_"BE, sat" = #qty(0.7, "V")$ and $V_"CE, sat" = #qty(0.25, "V")$ in these
 conditions.
 
-There is no way our monostable multivibrator will be able to supply this
-current, so we use an emitter follower in between the two stages. This is
+There is no way our monostable multivibrator will be able to supply this base
+current, so we'll use an emitter follower in between the two stages. This is
 perfect as it has a high impedance input and a low impedance output, which
 means that it can drive the DC chopper using the output signal from the
 monostable multivibrator.
 
 We won't be using the 2N3904 here as the collector current that we will need
-is almost near its maximum rating of #qty(200, "mA"), which risks overheating. Instead, let's use the 2N4401, which is rated for collector currents of up to #qty(600, "mA")
+is almost near its maximum rating of #qty(200, "mA"), which risks overheating.
+Instead, let's use the 2N4401, which is rated for collector currents of up to #qty(600, "mA")
 @2n4401. Let's set the $I_"C"$ of $Q_"E"$ to be #qty(100, "mA"), so that we
 have more than enough current at the emitter to drive the DC chopper. Note that
 an emitter follower does not go into saturation; it sits inside forward-active instead.
