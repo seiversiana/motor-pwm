@@ -209,14 +209,14 @@ a resistor network as shown in @i:rmb1.
 ) <i:rmb1>
 
 Here, $R_"P"$ is the potentiometer resistance, where $R_"P, max" >> Delta R_"MB1"$,
-and $R_"P, min" = #qty(0, "O")$. This makes it so that when $R_"P" = R_"P, min"$,
-$R_"MB1" = R_"MB1, min"$, and when $R_"P" = R_"P, max"$,
+and $R_"P, min" = #qty(0, "O")$. This makes it so that when $R_"P" = R_"P, min"$, then
+$R_"MB1" = R_"MB1, min"$, and when $R_"P" = R_"P, max"$, then
 $R_"MB1" approx R_"MB1, max"$. Let's use a potentiometer resistance $R_"P" = #qtyrange(0, 100, "kO")$, so
 that there is minimal deviation between the original and maximum varied
 $R_"MB1, max"$.
 
-Next, we can solve for $R_"MB2"$. Note that the base current $I_"B"$ should be
-#qty(1, "mA") for saturation, which means that the equivalent resistance must
+Next, we can solve for $R_"MB2"$. Recall that the base current $I_"B"$ should be
+#qty(1, "mA") for saturation with $I_"C" = #qty(10, "mA")$ @2n3904, which means that the equivalent resistance must
 allow for this. Fortunately, we have already calculated this value before in @f:abase.
 Setting $R_"MC2" = R_"MC1"$ and solving for $R_"MB2"$ @f:rmb2:
 
@@ -233,11 +233,11 @@ $
 	f_"max" = 1/t_"rr" = #qty(250, "MHz")
 $ <f:1n4148freq>
 
-Our specified frequency is safely within this limit. Now, we want to solve for
+Our specified frequency is safely within this limit. Next, we want to solve for
 $C_"T"$ and $R_"T"$. Note that we are triggering the monostable multivibrator
 using the falling edge of the astable multivibrator. This gives a negative
 voltage at the base of $Q_"M2"$ causing it to turn off and $Q_"M1"$ to turn on.
-$Q_"A2"$ is also turns on during this time, which means that we have an RC
+$Q_"A2"$ will also turn on during this time, which means that we have an RC
 circuit with $R_"T"$, $R_"MB1"$, and $C_"T"$ that discharges through $Q_"A2"$.
 
 We want the negative pulse to last long enough to trigger the cross-coupling of the
@@ -252,8 +252,8 @@ $ <f:2rc>
 This gets us #qty(86.5, "%") the way to completely discharging the capacitor,
 which is probably good enough for this calculation. Note that $R$ here would be the parallel
 resistors $R_"T"$ and $R_"MB2"$, and we will be using $R_"MB2" = R_"MB2, max"$
-so that we'll be solving for the maximum negative pulse time. Solving for $R_"T"$
-and $C_"T"$ @f:ctrtd:
+so that we'll be solving for the maximum negative pulse time. Setting up
+the equation for $R_"T"$ and $C_"T"$ @f:ctrtd:
 
 $
 	#qty(5, "%")/f_"S" =& 2 C_"T" dot (R_"T" R_"MB2, max")/(R_"T" + R_"MB2, max")
@@ -300,8 +300,8 @@ We won't be using the 2N3904 here as the collector current that we will need
 is almost near its maximum rating of #qty(200, "mA"), which risks overheating. Instead, let's use the 2N4401, which is rated for collector currents of up to #qty(600, "mA")
 @2n4401. Let's set the $I_"C"$ of $Q_"E"$ to be #qty(100, "mA"), so that we
 have more than enough current at the emitter to drive the DC chopper. Note that
-an emitter follower does not go into saturation; instead it sits inside
-forward-active. From the datasheet @2n4401, the closest $beta$ for our $I_C$ is
+an emitter follower does not go into saturation; it sits inside forward-active instead.
+From the datasheet @2n4401, the closest $beta$ for our $I_C$ is
 $beta = 80$, with $V_"CE" = #qty(1, "V")$. Therefore, we will need a base
 current $I_"B" = #qty(1.25, "mA")$ for the emitter follower.
 
@@ -309,7 +309,6 @@ Now, we solve for $I_"E"$, $R_"EE"$, and $R_"DB"$. Solving for $I_"E"$ @f:eemitt
 
 $
 	I_"E" =& I_"B" + I_"C" \
-		=& I_"C"/80 + I_"C" \
 		=& (81 I_"C")/80 \
 		=& #qty(101.25, "mA")
 $ <f:eemitter>
