@@ -383,8 +383,8 @@ theoretical component values and models are shown in @t:astable,
 		columns: 2,
 		table.header[Component][Value/Model],
 		$D_"T"$, [1N4148],
-		$R_"T"$, qty(618.67, "O"),
-		$C_"T"$, qty(14.69, "nF")
+		$R_"T"$, qty(321.59, "O"),
+		$C_"T"$, qty(15, "nF")
 	),
 	caption: [Component Values/Models for the Monostable Multivibrator\ Trigger],
 	placement: top
@@ -400,7 +400,7 @@ theoretical component values and models are shown in @t:astable,
 		$R_"MC2"$      , qty(580, "O"),
 		$R_"MB1, min"$ , qty(3.28, "kO"),
 		$Delta R_"MB1"$, qty(1.97, "kO"),
-		$R_"P"$        , qtyrange(0, 1, "MO"),
+		$R_"P"$        , qtyrange(0, 100, "kO"),
 		$R_"MB2"$      , qty(4.67, "kO"),
 		$C_"M"$       , qty(39.97, "nF")
 	),
@@ -440,9 +440,9 @@ In order to simulate the PWM motor controller system, we will use LTSpice.
 First, we will be simulating the circuit using the original non-standard values
 given in @t:astable, @t:trigger, @t:monostable, @t:emitterfollower, and
 @t:chopper. For all simulations, we will step $R_"P"$ through its minimum and
-maximum values: $R_"P, min" = #qty(0, "O")$ and $R_"P, max" = #qty(1, "MO")$. However,
+maximum values: $R_"P, min" = #qty(0, "O")$ and $R_"P, max" = #qty(100, "kO")$. However,
 LTSpice doesn't allow stepping with #qty(0, "O") resistors, so we'll instead
-use a minimum of $R_"P, min" = #qty(1, "nO")$.
+use a minimum potentiometer resistance $R_"P, min" = #qty(1, "nO")$.
 
 Also note, the motor was replaced by a #qty(7.19, "O") resistor. This was calculated
 by doing a KVL through the motor and the TIP31C, and by taking into account the
@@ -453,157 +453,122 @@ $
 	R_"M" = (V_"CC" - V_"CE, sat")/I_"stall" = #qty(7.19, "O")
 $ <f:motorresist>
 
-With the original values, we get the following measurements, shown in
-@t:original.
+With the theoretical values, we get the following measurements, shown in
+@t:theoretical.
 
 #figure(
 	vstable(
 		columns: 3,
 		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
-		[Frequency] , qty(6.17, "kHz"), qty(6.16, "kHz"),
-		[Duty Cycle], qty(44.1, "%") , qty(69.59, "%")
+		[Frequency] , qty(5.21, "kHz"), qty(5.21, "kHz"),
+		[Duty Cycle], qty(52.33, "%") , qty(75.5, "%")
 	),
-	caption: [Simulation Measurements of the Original Circuit]
-) <t:original>
+	caption: [Simulation Measurements of the Theoretical Circuit]
+) <t:theoretical>
 
-Unfortunately, all of our measured values are all out of spec, even considering
-the tolerances. The divergence of values probably stem from the fact that the
-$T = R C ln 2$ formula is not completely accurate in practice; for example, the
-capacitors don't discharge to #qty(0, "V"), they instead discharge to the CE
-saturation voltage $V_"CE, sat" = #qty(0.2, "V")$. $V_"BE, sat"$ is also not
-entirely accurate; the 2N3904 datasheet @2n3904 specifies a range and not a
-constant value.
+Sadly, our frequencies here are out of spec by about #qty(300, "Hz"). Our duty
+cycles are okay, but as much as possible we want them to be as close as possible
+to the specifications, so that real life tolerances won't nudge it out of the specified ranges.
 
-== Altered, Partially Standardized Components
-In order to fix the discrepancies in the frequency and duty cycles of the system,
-we will simply just try nearby standard values and find the values which
-correspond to the least error in these measurements. As much as possible, we want
-to avoid modifying the resistor values too much, as this may cause the
-transistors to fall out of saturation. Instead, we'll vary the capacitors first,
-and then vary the resistors.
+One problem is that the equation for the frequency of an astable multivibrator
+is just an ideal model, which assumes that the transistors instantly switch from
+cut-off to saturation, or that $V_"BE"$ and $V_"CE"$ are constant. It also doesn't
+take into account the fact that the astable multivibrator might be loaded; in our case,
+it is loaded by the monostable multivibrator trigger circuit, which may cause
+the frequencies to drift.
 
-The new values of various components are shown in @t:partialcomponents. Note that
-these values may be combinations of two standard-valued components. With the new
-values, the new measurements are shown in @t:partial. These values are now well
-within the specifications for frequency and duty cycle.
+Our duty cycles are a lot closer, but they can be better. A probable cause for
+this is the fact that setting $R_"P, max" = #qty(100, "kO")$ is not enough to eliminate
+itself from the total value of $R_"MB1"$. Recall that as $R_"P, max" -> +oo$,
+$R_"MB1" -> R_"MB1, max"$ because $Delta R_"MB1"$ and $R_"P"$ are in parallel.
+The monostable multivibrator is also loaded in our case by the emitter follower
+circuit, however not by much.
 
-#figure(
-	table(
-		columns: 2,
-		table.header[Component][New Value],
-		$R_"AB1"$      , qty(5.4, "kO"),
-		$R_"AB2"$      , qty(5.4, "kO"),
-		$R_"MB1"$      , qty(4.1, "kO"),
-		$Delta R_"MB1"$, qty(2.5, "kO"),
-		$C_"A1"$       , qty(27, "nF"),
-		$C_"A2"$       , qty(27, "nF"),
-		$C_"M"$        , qty(39, "nF"),
-	),
-	caption: [New Component Values of the Partially Standardized Circuit]
-) <t:partialcomponents>
+Here, LTSpice is more accurate since it models a lot more variables than just
+the RC time constant.
 
-#figure(
-	vstable(
-		columns: 3,
-		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
-		[Frequency] , qty(5.50, "kHz"), qty(5.48, "kHz"),
-		[Duty Cycle], qty(50.36, "%") , qty(79.91, "%")
-	),
-	caption: [Simulation Measurements of the Partially Standardized Circuit]
-) <t:partial>
+== Partly Standardized Values
+In order to fix the discrepancies in frequency and duty cycle, all we can really do
+is vary the timing components until the frequency and duty cycle are within the
+specifications. We can also now pick standard values for the components here.
 
-== Altered, Fully Standardized Components
-The last step is to replace all other components with standard-valued near
-equivalents. Standardizing all of the values reduced the frequency a bit, so
-new values had to be picked for $R_"AB1"$ and $R_"AB2"$. The duty cycle
-components were left unchanged. The new fully standardized values are shown
-in @t:fullcomponents. With the fully standardized values, the new measurements
-are shown in @t:full.
+For both multivibrators, we will pick a standard value for the timing capacitors
+first, then vary the timing resistors until the frequency and duty cycle are within
+the specifications. The new values are shown in @t:partlycomponents, and the measurements
+of the circuit are shown in @t:partlymeasurements.
 
 #figure(
 	dtable(
 		columns: 4,
 		table.header[Component][Value][Component][Value],
-		$R_"AC1"$, qty(560, "O"),
-		$R_"AC2"$, qty(560, "O"),
-		$R_"AB1"$, qty(5.37, "kO"),
-		$R_"AB2"$, qty(5.37, "kO"),
-		$R_"T"$  , qty(620, "O"),
-		$R_"MC1"$, qty(560, "O"),
-		$R_"MC2"$, qty(560, "O"),
-		$R_"MB2"$, qty(4.7, "kO"),
-		$R_"EB"$ , qty(3.6, "kO"),
-		$R_"EE"$ , qty(240, "O"),
-		$R_"DB"$ , qty(51, "O"),
-		$C_"T"$  , qty(15, "nF"),
+		$R_"AB1"$      , qty(4.62, "kO"),
+		$R_"AB2"$      , qty(4.62, "kO"),
+		$R_"MB1, min"$ , qty(3, "kO"),
+		$Delta R_"MB1"$, qty(2.5, "kO"),
+		$C_"A1"$       , qty(27, "nF"),
+		$C_"A2"$       , qty(27, "nF"),
+		$C_"M"$        , qty(39, "nF"),
 	),
-	caption: [New Component Values of the Fully Standardized Circuit],
+	caption: [Partly Standardized Component Values],
 	placement: top
-) <t:fullcomponents>
+) <t:partlycomponents>
 
 #figure(
 	vstable(
 		columns: 3,
 		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
-		[Frequency] , qty(5.49, "kHz"), qty(5.48, "kHz"),
-		[Duty Cycle], qty(50.26, "%") , qty(79.79, "%")
+		[Frequency] , qty(5.49, "kHz"), qty(5.49, "kHz"),
+		[Duty Cycle], qty(50.05, "%") , qty(79.97, "%")
 	),
-	caption: [Simulation Measurements of the Fully Standardized Circuit]
-) <t:full>
+	caption: [Simulation Measurements of the Partly Standardized Circuit],
+	placement: top
+) <t:partlymeasurements>
 
-These values are still well within the specifications. Before we continue to
-the physical implementation of the circuit, let's first check the wattages of
-the relatively high-current resistors. In particular, we want to check $R_"DB"$
-and $R_"EE"$. According to LTSpice, $I_"DB" approx #qty(45.9, "mA")$ and
-$I_"EE" approx #qty(14.6, "mA")$. With this, we can solve for the power dissipation of
-the resistors as shown in @f:pdb and @f:pee.
+The frequency and duty cycle is now within specifications. Note that the
+#qty(4.62, "kO") resistors are actually two #qty(2.2, "kO") resistors and a #qty(220, "O") resistor in series, and the #qty(2.5, "kO") resistor is actually two #qty(150, "O") resistors
+and a #qty(2.2, "kO") resistor in series.
 
-$
-	P_"DB" = I_"DB"^2 R_"DB" = #qty(107.45, "mW")
-$ <f:pdb>
-
-$
-	P_"EE" = I_"EE"^2 R_"EE" = #qty(51.16, "mW")
-$ <f:pee>
-
-While both of these are well within the rating of a #qty(0.25, "W") resistor,
-just to be safe, let's specify $R_"DB"$ to be a #qty(0.5, "W") resistor instead.
-
-
-
-= Implementation
-== Bill of Materials
-At last, the bill of materials for the PWM motor controller system is shown in
-@t:bill.
+== Completely Standardized Values
+Lastly, we will need to pick standard values for all of the components. The measurements
+will change here, so we'll also pick new values for them if ever they change
+too much. The new values are shown in @t:completelycomponents, and the measurements
+of the circuit are shown in @t:completelymeasurements.
 
 #figure(
-	table(
-		columns: 2,
-		table.header[Component][Quantity],
-		[TO-220 Heatsink]                       , num(1),
-		[#qty(6, "V") size 130 brushed DC motor], num(1),
-		[2N3904 NPN Transistor]                 , num(4),
-		[2N4401 NPN Transistor]                 , num(1),
-		[TIP31C NPN Transistor, TO-220]         , num(1),
-		[1N4007 Rectifier Diode]                , num(1),
-		[1N4148 Signal Diode]                   , num(1),
-		[#qty(1, "MO") Potentiometer], num(1),
-		[#qty(51, "O") Resistor, #qty(0.5, "W")], num(1),
-		[#qty(100, "O") Resistor]               , num(1),
-		[#qty(200, "O") Resistor]               , num(1),
-		[#qty(240, "O") Resistor]               , num(1),
-		[#qty(270, "O") Resistor]               , num(2),
-		[#qty(560, "O") Resistor]               , num(4),
-		[#qty(620, "O") Resistor]               , num(1),
-		[#qty(2.4, "kO") Resistor]              , num(1),
-		[#qty(3.6, "kO") Resistor]              , num(1),
-		[#qty(3.9, "kO") Resistor]              , num(1),
-		[#qty(4.7, "kO") Resistor]              , num(1),
-		[#qty(5.1, "kO") Resistor]              , num(2),
-		[#qty(15, "nF") Ceramic Capacitor]      , num(1),
-		[#qty(27, "nF") Ceramic Capacitor]      , num(2),
-		[#qty(39, "nF") Ceramic Capacitor]      , num(1)
+	dtable(
+		columns: 4,
+		table.header[Component][Value][Component][Value],
+		$R_"AC1"$      , qty(560, "O"),
+		$R_"AC2"$      , qty(560, "O"),
+		$R_"T"$        , qty(330, "kO"),
+		$R_"MC1"$      , qty(560, "O"),
+		$R_"MC2"$      , qty(560, "O"),
+		$R_"MB2"$      , qty(4.7, "kO"),
+		$R_"EB"$       , qty(3.6, "kO"),
+		$R_"EE"$       , qty(240, "O"),
+		$R_"DB"$       , qty(51, "O"),
 	),
-	caption: [Bill of Materials for the PWM Motor Controller System],
-	placement: none
-) <t:bill>
+	caption: [Completely Standardized Component Values],
+	placement: top
+) <t:completelycomponents>
+
+#figure(
+	vstable(
+		columns: 3,
+		table.header[Measurement][$R_"P, min"$][$R_"P, max"$],
+		[Frequency] , qty(5.49, "kHz"), qty(5.49, "kHz"),
+		[Duty Cycle], qty(50.11, "%") , qty(80.2, "%")
+	),
+	caption: [Simulation Measurements of the Completely Standardized Circuit],
+	placement: top
+) <t:completelymeasurements>
+
+Fortunately, the measurements didn't change too much, and they are still well within
+the specifications. Before we move on, let's check the power dissipation of the
+resistors. The resistor with the highest power dissipation is $R_"DB"$ at around
+#qty(106.54, "mW"). Let's specify $R_"DB"$ to be a #qty(0.5, "W") resistor instead,
+just to be safe.
+
+
+
+= Actual Construction

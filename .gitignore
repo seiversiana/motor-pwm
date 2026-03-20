@@ -26,6 +26,6 @@
 !/assets/fulltheoretical.svg
 
 !/ltspice/
-!/ltspice/original.asc
-!/ltspice/partialstandard.asc
-!/ltspice/fullstandard.asc
+!/ltspice/theoretical.asc
+!/ltspice/partly.asc
+!/ltspice/completely.asc
