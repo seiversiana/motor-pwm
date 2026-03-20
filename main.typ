@@ -308,9 +308,7 @@ current $I_"B" = #qty(1.25, "mA")$ for the emitter follower.
 Now, we solve for $I_"E"$, $R_"EE"$, and $R_"DB"$. Solving for $I_"E"$ @f:eemitter:
 
 $
-	I_"E" =& I_"B" + I_"C" \
-		=& (81 I_"C")/80 \
-		=& #qty(101.25, "mA")
+	I_"E" =& I_"B" + I_"C" = (81 I_"C")/80 = #qty(101.25, "mA")
 $ <f:eemitter>
 
 Doing KCL on the emitter node gives us the current through $R_"EE"$ @f:ereei:
@@ -572,3 +570,81 @@ just to be safe.
 
 
 = Actual Construction
+== Bill of Materials and Changed Components
+At last, shown in @t:bill is the bill of materials for the PWM motor controller.
+
+#figure(
+	table(
+		columns: 2,
+		table.header[Component][Quantity],
+		[TO-220 Heatsink]                       , num(1),
+		[#qty(6, "V") size 130 brushed DC motor], num(1),
+		[2N3904 NPN Transistor]                 , num(4),
+		[2N4401 NPN Transistor]                 , num(1),
+		[TIP31C NPN Transistor, TO-220]         , num(1),
+		[1N4007 Rectifier Diode]                , num(1),
+		[1N4148 Signal Diode]                   , num(1),
+		[#qty(100, "kO") Potentiometer]         , num(1),
+		[#qty(51, "O") Resistor, #qty(0.5, "W")], num(1),
+		[#qty(150, "O") Resistor]               , num(2),
+		[#qty(220, "O") Resistor]               , num(2),
+		[#qty(240, "O") Resistor]               , num(1),
+		[#qty(330, "O") Resistor]               , num(1),
+		[#qty(560, "O") Resistor]               , num(4),
+		[#qty(2.2, "kO") Resistor]              , num(5),
+		[#qty(3, "kO") Resistor]                , num(1),
+		[#qty(3.6, "kO") Resistor]              , num(1),
+		[#qty(4.7, "kO") Resistor]              , num(1),
+		[#qty(15, "nF") Ceramic Capacitor]      , num(1),
+		[#qty(27, "nF") Ceramic Capacitor]      , num(2),
+		[#qty(39, "nF") Ceramic Capacitor]      , num(1)
+	),
+	caption: [Bill of Materials for the PWM Motor Controller System],
+	placement: top
+) <t:bill>
+
+Unfortunately, I wasn't able to procure all of these components exactly; some
+resistors in particular are not quite the right values. However, none
+are the important timing resistors, so close but not exact values for these are fine.
+The list of changed components is found in @t:changed.
+
+#figure(
+	table(
+		columns: 2,
+		table.header[Component][New Value/Model],
+		$R_"EB"$, [#qty(3.3, "kO") Resistor],
+		$R_"DB"$, [#qty(50, "O") Resistor, #qty(0.5, "W")],
+		$C_"A1"$, [#qty(27, "nF") Mylar Capacitor],
+		$C_"A2"$, [#qty(27, "nF") Mylar Capacitor],
+		$C_"M"$ , [#qty(39, "nF") Mylar Capacitor],
+	),
+	caption: [List of Changed Components],
+	placement: top
+) <t:changed>
+
+== Breadboard Construction
+The breadboard construction of the circuit is shown in @i:breadboard.
+
+#figure(
+	rotate(-90deg, image("assets/breadboard.jpg"), reflow: true),
+	caption: [Breadboard construction of the PWM motor controller.],
+	placement: top
+) <i:breadboard>
+
+The voltage source here is a pack of four #qty(1.5, "V") AA batteries in series. From the
+last simulation, the current through the voltage source was around #qty(800, "mA").
+The carbon-zinc batteries that I am using is not at all suitable for this use-case,
+as it has high internal resistances especially when used under this amount of current.
+This is shown by the fact that the breadboard circuit does not generate the
+expected #qty(5.5, "kHz") square wave; the frequency is around #qty(5.3, "kHz") instead.
+From LTSpice, this is consistent with a voltage source of #qty(4, "V"), which confirms
+that each of the batteries have dropped to around #qty(1, "V") trying to sustain
+the high current. For this, alkaline batteries should be used instead.
+
+In order to test the frequency of the circuit at home without an oscilloscope, I simply
+connected the output which is normally connected to the motor to a pair of unused
+headphones that I didn't care about anymore. I compared the sound from the headphones
+to an online square wave generator, and varied the frequency on the website until both
+of the sounds matched. Doing this also confirmed that the multivibrators were working,
+since there wouldn't be any sound coming from the headphones if there wasn't some output
+wave from the circuit.
