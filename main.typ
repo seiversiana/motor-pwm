@@ -21,7 +21,7 @@
 	figure-supplement: [Fig.],
 )
 
-#set figure(placement: auto)
+#set figure(placement: top)
 
 #set table(
 	columns: (6em, auto),
@@ -356,7 +356,6 @@ theoretical component values and models are shown in @t:astable,
 #figure(
 	image("assets/fulltheoretical.png"),
 	caption: [Full diagram of the theoretical circuit.],
-	placement: auto,
 	scope: "parent"
 ) <i:fulltheoretical>
 
@@ -373,8 +372,7 @@ theoretical component values and models are shown in @t:astable,
 		$C_"A1"$ , qty(24.98, "nF"),
 		$C_"A2"$ , qty(24.98, "nF")
 	),
-	caption: [Component Values/Models for the Astable Multivibrator],
-	placement: top
+	caption: [Component Values/Models for the Astable Multivibrator]
 ) <t:astable>
 
 #figure(
@@ -385,8 +383,7 @@ theoretical component values and models are shown in @t:astable,
 		$R_"T"$, qty(321.59, "O"),
 		$C_"T"$, qty(15, "nF")
 	),
-	caption: [Component Values/Models for the Monostable Multivibrator\ Trigger],
-	placement: top
+	caption: [Component Values/Models for the Monostable Multivibrator\ Trigger]
 ) <t:trigger>
 
 #figure(
@@ -403,8 +400,7 @@ theoretical component values and models are shown in @t:astable,
 		$R_"MB2"$      , qty(4.67, "kO"),
 		$C_"M"$       , qty(39.97, "nF")
 	),
-	caption: [Component Values/Models for the Monostable Multivibrator],
-	placement: top
+	caption: [Component Values/Models for the Monostable Multivibrator]
 ) <t:monostable>
 
 #figure(
@@ -415,8 +411,7 @@ theoretical component values and models are shown in @t:astable,
 		$R_"EB"$, qty(3.75, "kO"),
 		$R_"EE"$, qty(235.29, "O")
 	),
-	caption: [Component Values/Models for the Emitter Follower],
-	placement: top
+	caption: [Component Values/Models for the Emitter Follower]
 ) <t:emitterfollower>
 
 #figure(
@@ -508,8 +503,7 @@ of the circuit are shown in @t:partlymeasurements.
 		$C_"A2"$       , qty(27, "nF"),
 		$C_"M"$        , qty(39, "nF"),
 	),
-	caption: [Partly Standardized Component Values],
-	placement: top
+	caption: [Partly Standardized Component Values]
 ) <t:partlycomponents>
 
 #figure(
@@ -519,8 +513,7 @@ of the circuit are shown in @t:partlymeasurements.
 		[Frequency] , qty(5.49, "kHz"), qty(5.49, "kHz"),
 		[Duty Cycle], qty(50.05, "%") , qty(79.97, "%")
 	),
-	caption: [Simulation Measurements of the Partly Standardized Circuit],
-	placement: top
+	caption: [Simulation Measurements of the Partly Standardized Circuit]
 ) <t:partlymeasurements>
 
 The frequency and duty cycle is now within specifications. Note that the
@@ -548,8 +541,7 @@ of the circuit are shown in @t:completelymeasurements.
 		$R_"EE"$       , qty(240, "O"),
 		$R_"DB"$       , qty(51, "O"),
 	),
-	caption: [Completely Standardized Component Values],
-	placement: top
+	caption: [Completely Standardized Component Values]
 ) <t:completelycomponents>
 
 #figure(
@@ -559,8 +551,7 @@ of the circuit are shown in @t:completelymeasurements.
 		[Frequency] , qty(5.49, "kHz"), qty(5.49, "kHz"),
 		[Duty Cycle], qty(50.11, "%") , qty(80.2, "%")
 	),
-	caption: [Simulation Measurements of the Completely Standardized Circuit],
-	placement: top
+	caption: [Simulation Measurements of the Completely Standardized Circuit]
 ) <t:completelymeasurements>
 
 Fortunately, the measurements didn't change too much, and they are still well within
@@ -601,8 +592,7 @@ At last, shown in @t:bill is the bill of materials for the PWM motor controller.
 		[#qty(27, "nF") Ceramic Capacitor]      , num(2),
 		[#qty(39, "nF") Ceramic Capacitor]      , num(1)
 	),
-	caption: [Bill of Materials for the PWM Motor Controller System],
-	placement: top
+	caption: [Bill of Materials for the PWM Motor Controller System]
 ) <t:bill>
 
 Unfortunately, I wasn't able to procure all of these components exactly; some
@@ -620,8 +610,7 @@ The list of changed components is found in @t:changed.
 		$C_"A2"$, [#qty(27, "nF") Mylar Capacitor],
 		$C_"M"$ , [#qty(39, "nF") Mylar Capacitor],
 	),
-	caption: [List of Changed Components],
-	placement: top
+	caption: [List of Changed Components]
 ) <t:changed>
 
 The mylar capacitors are fine in our case since our frequency specifications are
@@ -635,8 +624,7 @@ The breadboard construction of the circuit is shown in @i:breadboard.
 
 #figure(
 	rotate(-90deg, image("assets/breadboard.jpg"), reflow: true),
-	caption: [Breadboard construction of the PWM motor controller.],
-	placement: top
+	caption: [Breadboard construction of the PWM motor controller.]
 ) <i:breadboard>
 
 The voltage source here is a pack of four #qty(1.5, "V") AA batteries in series. From the
