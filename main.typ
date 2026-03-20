@@ -120,7 +120,7 @@ $
 	f_"max" = 1/(t_"d" + t_"r" + t_"s" + t_"f") = #qty(3.125, "MHz")
 $ <f:2n3904freq>
 
-Our needed frequency is easily within this limit. Now, since the astable
+Our needed frequency is safely within this limit. Now, since the astable
 multivibrator cycles its transistors between cut-off and saturation, we need to
 determine the currents and resistor values in order to let the transistors go
 into saturation. From the datasheet @2n3904, we have $V_"CE, sat" = #qty(0.2, "V")$
@@ -134,7 +134,7 @@ In order to further simplify calculations and reduce the number of unique
 components, we can recognize that the duty cycle of this stage does not matter,
 since only the rising edge of the output will be used to trigger the monostable
 multivibrator. This is independent of duty cycle, and only requires that the
-frequency be constant. Therefore, we assume a duty cycle $D_"A" = #qty(50, "%")$
+frequency be constant. Therefore, we assume a duty cycle of #qty(50, "%")
 and set $R_"AB1" = R_"AB2" = R_"AB"$, $R_"AC1" = R_"AC2" = R_"AC"$, and
 $C_"A1" = C_"A2" = C_"A"$. The calculation for the base and collector resistors
 are shown in @f:abase and @f:acollector.
@@ -211,16 +211,18 @@ a resistor network as shown in @i:rmb1.
 Here, $R_"P"$ is the potentiometer resistance, where $R_"P, max" >> Delta R_"MB1"$,
 and $R_"P, min" = #qty(0, "O")$. This makes it so that when $R_"P" = R_"P, min"$,
 $R_"MB1" = R_"MB1, min"$, and when $R_"P" = R_"P, max"$,
-$R_"MB1" approx R_"MB1, max"$. Let's use a potentiometer resistance $R_"P" = #qtyrange(0, 1, "MO")$, so
+$R_"MB1" approx R_"MB1, max"$. Let's use a potentiometer resistance $R_"P" = #qtyrange(0, 100, "kO")$, so
 that there is minimal deviation between the original and maximum varied
 $R_"MB1, max"$.
 
 Next, we can solve for $R_"MB2"$. Note that the base current $I_"B"$ should be
 #qty(1, "mA") for saturation, which means that the equivalent resistance must
 allow for this. Fortunately, we have already calculated this value before in @f:abase.
-Setting $R_"MC2" = R_"MC1"$ and solving for $R_"MB2"$:
+Setting $R_"MC2" = R_"MC1"$ and solving for $R_"MB2"$ @f:rmb2:
 
-$ R_"MB2" = R_"AB" - R_"MC2" = #qty(4.67, "kO") $
+$
+	R_"MB2" = R_"AB" - R_"MC2" = #qty(4.67, "kO")
+$ <f:rmb2>
 
 Finally, we need to solve for the values for the coupling. First, we need to
 select the diode for $D_"T"$. The 1N4148 is a high-speed switching diode which
@@ -231,55 +233,39 @@ $
 	f_"max" = 1/t_"rr" = #qty(250, "MHz")
 $ <f:1n4148freq>
 
-Our specified frequency is way below this limit. Now, we want a sufficient current
-at the base of $Q_"M1"$ so that the transistor will reliably discharge $C_"M"$ and
-allow the cross-coupling to take over. Let's set $I_"C" = #qty(50, "mA")$ and
-$I_"B" = #qty(5, "mA")$. This gives us a $V_"BE, sat" = #qty(0.95, "V")$
-@2n3904. Note that the forward voltage of the 1N4148 at this current is
-$V_"F" = #qty(0.65, "V")$ @1n4148. With this information, we can solve for
-$I_"out, A"$ by doing KVL through $R_"AC2"$ and the base of $Q_"M1"$ @f:aouti:
+Our specified frequency is safely within this limit. Now, we want to solve for
+$C_"T"$ and $R_"T"$. Note that we are triggering the monostable multivibrator
+using the falling edge of the astable multivibrator. This gives a negative
+voltage at the base of $Q_"M2"$ causing it to turn off and $Q_"M1"$ to turn on.
+$Q_"A2"$ is also turns on during this time, which means that we have an RC
+circuit with $R_"T"$, $R_"MB1"$, and $C_"T"$ that discharges through $Q_"A2"$.
+
+We want the negative pulse to last long enough to trigger the cross-coupling of the
+monostable multivibrator, but also short enough that it doesn't retrigger it. A
+good baseline value for this would be #qty(10, "%") of $T_"off"$. Let's use the
+formula @f:2rc:
 
 $
-	V_"CC" - I_"out, A" dot R_"AC2" - V_"F" - V_"BE, sat" = 0 \
-	I_"out, A" = (V_"CC" - V_"F" - V_"BE, sat")/R_"AC2" = #qty(7.59, "mA")
-$ <f:aouti>
+	T = 2 R C
+$ <f:2rc>
 
-We then do KCL on the node between $C_"T"$, $R_"T"$, and $D_"T"$ to get
-$I_"T"$ @f:tcurrent:
-
-$
-	I_"T" = I_"out, A" - I_"B" = #qty(2.59, "mA")
-$ <f:tcurrent>
-
-We also know the voltage at this node @f:tvoltage:
+This gets us #qty(86.5, "%") the way to completely discharging the capacitor,
+which is probably good enough for this calculation. Note that $R$ here would be the parallel
+resistors $R_"T"$ and $R_"MB2"$, and we will be using $R_"MB2" = R_"MB2, max"$
+so that we'll be solving for the maximum negative pulse time. Solving for $R_"T"$
+and $C_"T"$ @f:ctrtd:
 
 $
-	V_"T" = V_"F" + V_"BE, sat" = #qty(1.6, "V")
-$ <f:tvoltage>
+	#qty(5, "%")/f_"S" =& 2 C_"T" dot (R_"T" R_"MB2, max")/(R_"T" + R_"MB2, max")
+$ <f:ctrtd>
 
-Then we can solve for $R_"T"$ @f:tresistance:
-
-$
-	R_"T" = V_"T"/I_"T" = #qty(618.67, "O")
-$ <f:tresistance>
-
-Finally, in order to solve for $C_"T"$, we want a pulse width that is long enough
-to start regeneration and short enough that the capacitor fully resets before
-the next cycle. A general value for this pulse width is
-$#qty(10, "%") dot T_"on, min"$. With this, we have a bit of leeway, so we can
-use the rough approximation $T_"pulse" = R_"T" C_"T"$. We can then solve
-for $C_"T"$, as shown in @f:tcapd and @f:tcapv.
+Now, there isn't really a single value for $C_"T"$ and $R_"T"$ since we only have
+one equation. So let's set $C_"T" = #qty(15, "nF")$ since this is what I have on
+hand, and solve for $R_"T"$. We finally get @f:rt:
 
 $
-	T_"pulse" =& R_"T" C_"T" \
-	#qty(10, "%") dot T_"S, on" =& R_"T" C_"T" \
-	#qty(10, "%") dot T_"S" D_"S, min" =& R_"T" C_"T" \
-	f_"S" =& (#qty(10, "%") dot D_"S, min")/(R_"T" C_"T")
-$ <f:tcapd>
-
-$
-	C_"T" = (#qty(10, "%") dot D_"S, min")/(R_"T" f_"S") = #qty(14.69, "nF")
-$ <f:tcapv>
+	R_"T" = #qty(321.59, "O")
+$ <f:rt>
 
 == Emitter Follower and DC Chopper
 The circuit diagram of the DC chopper coupled to the emitter follower and
@@ -389,7 +375,7 @@ theoretical component values and models are shown in @t:astable,
 		$C_"A1"$ , qty(24.98, "nF"),
 		$C_"A2"$ , qty(24.98, "nF")
 	),
-	caption: [Component Values/Models for the Astable Multivbrator],
+	caption: [Component Values/Models for the Astable Multivibrator],
 	placement: top
 ) <t:astable>
 
@@ -419,7 +405,7 @@ theoretical component values and models are shown in @t:astable,
 		$R_"MB2"$      , qty(4.67, "kO"),
 		$C_"M"$       , qty(39.97, "nF")
 	),
-	caption: [Component Values/Models for the Monostable Multivbrator],
+	caption: [Component Values/Models for the Monostable Multivibrator],
 	placement: top
 ) <t:monostable>
 
@@ -450,7 +436,7 @@ theoretical component values and models are shown in @t:astable,
 
 
 = Simulation
-== Original Values
+== Theoretical Values
 In order to simulate the PWM motor controller system, we will use LTSpice.
 First, we will be simulating the circuit using the original non-standard values
 given in @t:astable, @t:trigger, @t:monostable, @t:emitterfollower, and
