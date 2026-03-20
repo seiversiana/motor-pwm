@@ -604,8 +604,8 @@ At last, shown in @t:bill is the bill of materials for the PWM motor controller.
 ) <t:bill>
 
 Unfortunately, I wasn't able to procure all of these components exactly; some
-resistors in particular are not quite the right values. However, none
-are the important timing resistors, so close but not exact values for these are fine.
+resistors in particular are not quite the right values. However, none of them
+were the important timing resistors, so close but not exact values for them are fine.
 The list of changed components is found in @t:changed.
 
 #figure(
@@ -621,6 +621,12 @@ The list of changed components is found in @t:changed.
 	caption: [List of Changed Components],
 	placement: top
 ) <t:changed>
+
+The mylar capacitors are fine in our case since our frequency specifications are
+relatively low. The lower values for $R_"EB"$ and $R_"DB"$ doesn't really matter
+since the collector currents are already limited for their respective transistors.
+There will be a higher emitter current for those transistors, but that isn't
+a problem.
 
 == Breadboard Construction
 The breadboard construction of the circuit is shown in @i:breadboard.
